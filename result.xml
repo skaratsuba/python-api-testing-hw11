@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="13" time="24.161" timestamp="2024-07-08T14:44:43.027835" hostname="Sergiys-MacBook-Pro.local"><testcase classname="Tests.test_space_methods" name="test_get_space[Get space details of specific space_id-90152681230-200]" file="Tests/test_space_methods.py" line="20" time="0.444" /><testcase classname="Tests.test_space_methods" name="test_get_space[Get details of not existed space_id-999999999999999999-401]" file="Tests/test_space_methods.py" line="20" time="0.922" /><testcase classname="Tests.test_space_methods" name="test_get_space[Get details of not valid space_id-SSS-400]" file="Tests/test_space_methods.py" line="20" time="0.075" /><testcase classname="Tests.test_space_methods" name="test_update_space[Update space name by specific space_id-90152681230-200-false-false]" file="Tests/test_space_methods.py" line="29" time="2.213" /><testcase classname="Tests.test_space_methods" name="test_update_space[Update space name by not existed space_id-0-401-false-false]" file="Tests/test_space_methods.py" line="29" time="2.993" /><testcase classname="Tests.test_space_methods" name="test_update_space[Update space by specific space_id with empy json-90152681230-400-false-true]" file="Tests/test_space_methods.py" line="29" time="2.210"><failure message="assert 200 == 400&#10; +  where 200 = &lt;Response [200]&gt;.status_code">test_name = 'Update space by specific space_id with empy json', space_id = '90152681230', expected_status_code = 400, manage_flag = 'false'
+make_json_empty = 'true'
+
+    @pytest.mark.parametrize('test_name, space_id, expected_status_code, manage_flag, make_json_empty',
+                             [
+                                 ('Update space name by specific space_id', '90152681230', 200, 'false', 'false'),
+                                 ('Update space name by not existed space_id', '0', 401, 'false', 'false'),
+                                 ('Update space by specific space_id with empy json', '90152681230', 400, 'false', 'true'),
+                                 ('Update space by specific space_id with the parameter "admin_can_manage=true"',
+                                  '90152681230', 403, 'true', 'false')
+                             ])
+    def test_update_space(test_name, space_id, expected_status_code, manage_flag, make_json_empty):
+        space_body = create_space_body(manage_flag, make_json_empty)
+        put_space_response, put_space_response_json = method_space('put', session, '/space/' + space_id, space_body)
+    
+&gt;       assert put_space_response.status_code == expected_status_code
+E       assert 200 == 400
+E        +  where 200 = &lt;Response [200]&gt;.status_code
+
+Tests/test_space_methods.py:42: AssertionError</failure></testcase><testcase classname="Tests.test_space_methods" name="test_update_space[Update space by specific space_id with the parameter &quot;admin_can_manage=true&quot;-90152681230-403-true-false]" file="Tests/test_space_methods.py" line="29" time="2.155" /><testcase classname="Tests.test_space_methods" name="test_delete_by_space_id[Create space]" file="Tests/test_space_methods.py" line="51" time="2.304" /><testcase classname="Tests.test_space_methods" name="test_delete_by_space_id[DELETE space]" file="Tests/test_space_methods.py" line="51" time="2.292" /><testcase classname="Tests.test_space_methods" name="test_delete_by_space_id[Check if deleted]" file="Tests/test_space_methods.py" line="51" time="0.159" /><testcase classname="Tests.test_space_methods" name="test_delete_space[Delete space by not existed space_id-9999999999999999999-401]" file="Tests/test_space_methods.py" line="71" time="2.921"><failure message="assert 500 == 401&#10; +  where 500 = &lt;Response [500]&gt;.status_code">test_name = 'Delete space by not existed space_id', space_id = '9999999999999999999', expected_status_code = 401
+
+    @pytest.mark.parametrize('test_name, space_id, expected_status_code',
+                             [('Delete space by not existed space_id', '9999999999999999999', 401),
+                              ('Delete space by not valid space_id', 'sss', 400),
+                              ('Delete space by space_id=0', '0', 401)])
+    def test_delete_space(test_name, space_id, expected_status_code):
+        space_body = create_space_body()
+        delete_space_response, delete_space_response_json = method_space('delete', session, '/space/' + space_id,
+                                                                         space_body)
+&gt;       assert delete_space_response.status_code == expected_status_code
+E       assert 500 == 401
+E        +  where 500 = &lt;Response [500]&gt;.status_code
+
+Tests/test_space_methods.py:80: AssertionError</failure></testcase><testcase classname="Tests.test_space_methods" name="test_delete_space[Delete space by not valid space_id-sss-400]" file="Tests/test_space_methods.py" line="71" time="2.084" /><testcase classname="Tests.test_space_methods" name="test_delete_space[Delete space by space_id=0-0-401]" file="Tests/test_space_methods.py" line="71" time="3.025" /></testsuite></testsuites>
